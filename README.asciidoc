@@ -1,0 +1,14 @@
+Gradle JXR plugin image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["Build Status", link="https://travis-ci.org/davidecavestro/gradle-jxr-plugin"]
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+License
+~~~~~~~
+The JXR Ant Task is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
+
+Credits
+~~~~~~~
+Many thanks to:
+
+* The http://gradle.org/[Gradle project]
+* The http://maven.apache.org/[Maven project]

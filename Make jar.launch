@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.springsource.ide.eclipse.gradle.launch">
+<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${project}"/>
+<stringAttribute key="org.springsource.ide.eclipse.gradle.launch.EE_NAME" value="JavaSE-1.6"/>
+<stringAttribute key="org.springsource.ide.eclipse.gradle.launch.PROJECT" value="gradle-jxr-plugin"/>
+<listAttribute key="org.springsource.ide.eclipse.gradle.launch.TASKLIST">
+<listEntry value=":jar"/>
+</listAttribute>
+</launchConfiguration>

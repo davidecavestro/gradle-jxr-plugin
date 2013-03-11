@@ -1,0 +1,14 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral ()
+    maven { url uri('repo') }
+}
+
+dependencies {
+    compile gradleApi()
+    groovy localGroovy()
+    compile 'org.apache.maven:maven-jxr:2.3'
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '1.4' }
