@@ -13,7 +13,7 @@ The plugin provides the additional task +jxr+. It produces html crossreference f
 
 License
 ~~~~~~~
-The JXR Ant Task is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
+The JXR gradle plugin is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
 
 Credits
 ~~~~~~~
