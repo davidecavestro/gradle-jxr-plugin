@@ -73,8 +73,15 @@ class JxrTask extends DefaultTask {
                 def styleSheetOutput = new File (outputDir, 'stylesheet.css')
                 def cssPath = '/net/davidecavestro/gradle/jxr/stylesheet.css'
                 
-                JarURLConnection connection = (JarURLConnection) getClass().getResource (cssPath).openConnection();
-                File file = new File(connection.getJarFileURL().toURI())
+                File file
+                try {
+                    JarURLConnection connection = (JarURLConnection) getClass().getResource (cssPath).openConnection();
+                    file = new File(connection.getJarFileURL().toURI())
+                } catch (Exception e) {
+                    //at test time the css is available from resources dir, not within a jar
+                    file = new File (getClass().getResource (cssPath).toURI())
+                }
+                
                 
                 inputs.file file //declare as input the jar containing the css
                 outputs.file styleSheetOutput
