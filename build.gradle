@@ -22,6 +22,15 @@ configurations.all {
 }
 
 if(project.hasProperty("userRemoteRepo")) {
+    
+    
+    def installer = install.repositories.mavenInstaller
+    def deployer = null
+    
+    if(!project.hasProperty('bintrayUsername')) ext.bintrayUsername = ''
+    if(!project.hasProperty('bintrayPassword')) ext.bintrayPassword = ''
+    
+    
     uploadArchives {
         repositories {
             deployer = mavenDeployer {

@@ -3,7 +3,7 @@ jdk:
   - oraclejdk6
 env: DISPLAY=:99.0
 env: GRADLE_OPTS="-XX:MaxPermSize=250m -Xmx768m"
-script: ./gradle clean test jar
+script: ./gradlew clean test jar
 after_script:
   - test -f ./build/libs/gradle-jxr-plugin-*.jar
 before_install:
