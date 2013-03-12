@@ -9,7 +9,7 @@ apply plugin: 'java'
 apply plugin: 'jxr'
 ----
 
-The plugin provides the additional task +jxr+. It produces html crossreference files for your java sources at path _build/jxr_
+The plugin provides the additional task +jxr+. It produces per-project html crossreference files for your java sources at path _build/jxr_.
 
 License
 ~~~~~~~
@@ -25,7 +25,7 @@ Many thanks to:
 
 TODO
 ~~~~
-* fix missing cross references!!!
+* find a way to fix https://jira.codehaus.org/browse/JXR-100[missing cross references] when using whitespaces before or after method/constructor declaration.
 * publish on bintray
 * provide support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/aggregate.html[aggregating references] 
 * provide support for multiproject builds
