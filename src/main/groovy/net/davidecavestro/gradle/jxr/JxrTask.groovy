@@ -38,20 +38,36 @@ class JxrTask extends DefaultTask {
     @Input String docTitle
     @Input String footer
     @Input boolean linkToJavadoc
-
+    
+    @Input String outputEncoding
+    @Input String inputEncoding
+    
     boolean validProject
 
     JxrTask() {
-        validProject = project.plugins.findPlugin('java')
+        def javaProject = project.plugins.findPlugin('java')
+        def groovyProject = project.plugins.findPlugin('groovy')
+        validProject = javaProject || groovyProject
 
         if (validProject) {
-            sourceDirs = project.sourceSets*.java.srcDirs.collect {it.path}.flatten().findAll {new File (it).exists ()}
-            println "sourceDirs: $sourceDirs"
+            
+            def candidates = []
+            if (javaProject) {
+                candidates.addAll project.sourceSets*.java.srcDirs
+            }
+            if (groovyProject) {
+                candidates.addAll project.sourceSets*.groovy.srcDirs
+            }
+            sourceDirs = candidates.collect {it.path}.flatten().findAll {new File (it).exists ()}
+            logger.debug ("JXR sourceDirs: $sourceDirs")
             outputDir = new File(project.buildDir, 'jxr')
             templatesDir = "templates"
             windowTitle = "$project.name sources documentation"
             docTitle = "$project.name sources documentation"
             footer = 'Produced by Gradle JXR plugin'
+            
+            outputEncoding = 'utf-8'
+            inputEncoding = 'utf-8'
             
             def copyJxrResources = project.task ('copyJxrResources') {
                 def styleSheetOutput = new File (outputDir, 'stylesheet.css')
@@ -78,13 +94,18 @@ class JxrTask extends DefaultTask {
     @TaskAction
     void generate() {
         if (!validProject) {
-            throw new GradleException("The project is not configured with 'java' plugin")
+            throw new GradleException("The project is not configured with 'java' or 'groovy' plugin")
         }
 
         try {
             JXR jxr = new JXR ()
             jxr.setDest (outputDir.path)
-            jxr.setLog (new JxrLog (logger: logger));
+            jxr.setLog (new JxrLog (logger: logger))
+            
+            //FIXME detect a unique encoding for sources
+//            jxr.setOutputEncoding(outputEncoding);
+//            jxr.setInputEncoding(inputEncoding);
+            
             if (linkToJavadoc) {
                 jxr.setJavadocLinkDir(footer)
             }
