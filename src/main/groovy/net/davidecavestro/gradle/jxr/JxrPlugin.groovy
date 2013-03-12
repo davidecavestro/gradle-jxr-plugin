@@ -28,14 +28,5 @@ import org.gradle.api.tasks.Copy
 class JxrPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.task('jxr', type: JxrTask, group: 'Documentation')
-
-        project.task ('copyJxrResources', type: Copy) << {
-
-            //URL defaultStylesheetUrl = this.getClass().getResource("/net/davidecavestro/gradle/jxr/stylesheet.css");
-            //def stylesheet = new URLResource(defaultStylesheetUrl);
-
-            from(project.file ('stylesheet.css'))
-            into('target/jxr')
-        }
     }
 }

@@ -1,8 +1,12 @@
 apply plugin: 'groovy'
+apply plugin: 'maven'
 
 repositories {
     mavenCentral ()
-    maven { url uri('repo') }
+    flatDir {
+        name "fileRepo"
+        dirs "repo"
+    }
 }
 
 dependencies {
@@ -12,3 +16,54 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '1.4' }
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 60, 'seconds'
+}
+
+if(project.hasProperty("userRemoteRepo")) {
+    uploadArchives {
+        repositories {
+            deployer = mavenDeployer {
+                name = 'bintrayDeployer'
+                repository(url: bintrayReleaseUrl) {
+                    authentication(userName: bintrayUsername, password: bintrayPassword)
+                }
+            }
+        }
+    }
+
+    [installer, deployer].each { repo ->
+        configure(repo) {
+            pom.project {
+                name('gradle-jxr-plugin')
+                description("A Gradle plugin that uses Maven JXR to produce cross-reference for project's sources.")
+                url('http://github.com/davidecavestro/gradle-jxr-plugin')
+                inceptionYear '2013'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                scm { url "https://github.com/asciidoctor/asciidoctor-gradle-plugin" }
+                developers {
+                    [
+                        davidecavestro: 'Davide Cavestro'
+                    ].each { devId, devName ->
+                        developer {
+                            id devId
+                            name devName
+                            roles { role 'Developer' }
+                        }
+                    }
+                }
+            }
+        }
+    }
+} else {
+    uploadArchives {
+        repositories { add project.repositories.fileRepo }
+    }
+}

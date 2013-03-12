@@ -12,3 +12,4 @@ Many thanks to:
 
 * The http://gradle.org/[Gradle project]
 * The http://maven.apache.org/[Maven project]
+* The https://github.com/asciidoctor/asciidoctor-gradle-plugin[asciidoctor-gradle-plugin] (I learned very much from their code).

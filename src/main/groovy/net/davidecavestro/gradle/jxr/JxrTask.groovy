@@ -16,13 +16,14 @@
 
 package net.davidecavestro.gradle.jxr
 
+import org.apache.maven.jxr.JXR
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
-import org.gradle.api.InvalidUserDataException
+import org.gradle.api.Task
+import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
-import org.apache.maven.jxr.JXR
 
 /**
  * JXR invocation task.
@@ -31,23 +32,45 @@ import org.apache.maven.jxr.JXR
  */
 class JxrTask extends DefaultTask {
     @Input Collection<File> sourceDirs
-    @Input File templatesDir
+    @Input String templatesDir
     @OutputDirectory File outputDir
     @Input String windowTitle
     @Input String docTitle
     @Input String footer
-    
+    @Input boolean linkToJavadoc
+
     boolean validProject
 
     JxrTask() {
         validProject = project.plugins.findPlugin('java')
 
         if (validProject) {
-            sourceDirs = project.sourceSets*.java.srcDirs.collect {it.path}
+            sourceDirs = project.sourceSets*.java.srcDirs.collect {it.path}.flatten().findAll {new File (it).exists ()}
+            println "sourceDirs: $sourceDirs"
             outputDir = new File(project.buildDir, 'jxr')
+            templatesDir = "templates"
             windowTitle = "$project.name sources documentation"
             docTitle = "$project.name sources documentation"
             footer = 'Produced by Gradle JXR plugin'
+            
+            def copyJxrResources = project.task ('copyJxrResources') {
+                def styleSheetOutput = new File (outputDir, 'stylesheet.css')
+                def cssPath = '/net/davidecavestro/gradle/jxr/stylesheet.css'
+                
+                JarURLConnection connection = (JarURLConnection) getClass().getResource (cssPath).openConnection();
+                File file = new File(connection.getJarFileURL().toURI())
+                
+                inputs.file file //declare as input the jar containing the css
+                outputs.file styleSheetOutput
+                
+                doLast {
+                    outputDir.mkdirs()
+                    //copies css contents
+                    styleSheetOutput << JXR.class.getResourceAsStream(cssPath).text
+                }
+            }
+            
+            this.dependsOn copyJxrResources
         }
     }
 
@@ -62,12 +85,17 @@ class JxrTask extends DefaultTask {
             JXR jxr = new JXR ()
             jxr.setDest (outputDir.path)
             jxr.setLog (new JxrLog (logger: logger));
+            if (linkToJavadoc) {
+                jxr.setJavadocLinkDir(footer)
+            }
 
-            jxr.xref (sourceDirs, templatesDir.absolutePath, windowTitle, docTitle, footer);
+            jxr.xref (sourceDirs, templatesDir, windowTitle, docTitle, footer);
         }
         catch (Exception e) {
             logger.error('Error running jxr', e)
             throw new GradleException('Error running jxr', e)
         }
+
+        logger.info ("JXR documentation generated at $outputDir")
     }
 }
