@@ -40,8 +40,9 @@ TODO
 ~~~~
 * find a way to fix https://jira.codehaus.org/browse/JXR-100[missing cross references] when using whitespaces before or after method/constructor declaration.
 * publish on bintray
-* provide support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/aggregate.html[aggregating references] 
-* provide support for multiproject builds
-* provide support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/linkjavadoc.html[linking javadoc]
-* provide configuration hooks for JXR configuration, namely: input/output encoding, source dirs, output dir
+* add support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/aggregate.html[aggregating references] 
+* add support for multiproject builds
+* add support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/linkjavadoc.html[linking javadoc]
+* add support https://jira.codehaus.org/browse/JXR-101[generating xrefs for groovy sources]
+* add configuration hooks for JXR configuration, namely: input/output encoding, source dirs, output dir
 * documentation
