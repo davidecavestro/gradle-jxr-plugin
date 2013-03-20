@@ -17,6 +17,15 @@ dependencies {
 
 task wrapper(type: Wrapper) { gradleVersion = '1.4' }
 
+task packageSources (type: Jar) {
+   from sourceSets.main.allSource
+   classifier = 'sources'
+}
+
+artifacts {
+   archives (packageSources)
+}
+
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 60, 'seconds'
 }
