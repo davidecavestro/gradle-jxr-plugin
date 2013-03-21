@@ -1,13 +1,14 @@
-Gradle JXR plugin image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["Build Status", link="https://travis-ci.org/davidecavestro/gradle-jxr-plugin"]
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+== Gradle JXR plugin
+image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["Build Status", link="https://travis-ci.org/davidecavestro/gradle-jxr-plugin"]
 
-Installation
-~~~~~~~~~~~~
+
+== Installation
+
 Apply the plugin in a java project
 ----
 buildscript {
     repositories {
-        mavenRepo name: 'Bintray', url: 'http://dl.bintray.com/content/davidecavestro/gradle'
+        mavenRepo name: 'Bintray', url: 'http://jcenter.bintray.com'
         mavenCentral()
     }
 
@@ -20,24 +21,24 @@ apply plugin: 'java'
 apply plugin: 'jxr'
 ----
 
-Usage
-~~~~~
+== Usage
+
 Once installed the plugin provides the additional task +jxr+. It produces per-project html crossreference files for your java sources at path _build/jxr_.
 
-License
-~~~~~~~
+== License
+
 The gradle JXR plugin is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
 
-Credits
-~~~~~~~
+== Credits
+
 Many thanks to:
 
 * The http://gradle.org/[Gradle project]
 * The http://maven.apache.org/[Maven project]
 * The https://github.com/asciidoctor/asciidoctor-gradle-plugin[asciidoctor-gradle-plugin] (I learned very much from their code).
 
-TODO
-~~~~
+== TODO
+
 * find a way to fix https://jira.codehaus.org/browse/JXR-100[missing cross references] when using whitespaces before or after method/constructor declaration.
 * add support for http://maven.apache.org/plugins/maven-jxr-plugin/examples/aggregate.html[aggregating references] 
 * add support for multiproject builds
@@ -45,3 +46,13 @@ TODO
 * add support for https://jira.codehaus.org/browse/JXR-101[generating xrefs for groovy sources]
 * add configuration hooks for JXR configuration, namely: input/output encoding, source dirs, output dir
 * documentation
+
+== Release Notes
+
+
+=== v0.1.1
+
+* Added sources jar to published artifacts (in order to be published at http://jcenter.bintray.com). 
+
+=== v0.1
+* Initial release. Very rough support in place.
