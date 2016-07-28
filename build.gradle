@@ -11,11 +11,13 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    groovy localGroovy()
-    compile 'org.apache.maven:maven-jxr:2.3'
+    compile localGroovy()
+    compile 'org.apache.maven:maven-jxr:2.5'
+
+    testCompile 'junit:junit:4.12'
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '1.4' }
+task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
 
 task packageSources (type: Jar) {
    from sourceSets.main.allSource
