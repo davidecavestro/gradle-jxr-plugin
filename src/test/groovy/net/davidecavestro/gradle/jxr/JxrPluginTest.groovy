@@ -32,7 +32,7 @@ class JxrPluginTest {
     public void greeterPluginAddsGreetingTaskToProject() {
         Project project = ProjectBuilder.builder().build()
         project.apply plugin: 'java'
-        project.apply plugin: 'jxr'
+        project.apply plugin: 'net.davidecavestro.gradle.jxr'
 
         Assert.assertTrue(project.tasks.jxr instanceof JxrTask)
     }
