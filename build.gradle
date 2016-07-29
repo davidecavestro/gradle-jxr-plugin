@@ -1,3 +1,16 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.gradle.publish:plugin-publish-plugin:0.9.5"
+  }
+}
+
+apply plugin: "com.gradle.plugin-publish"
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
@@ -17,8 +30,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
-
 task packageSources (type: Jar) {
    from sourceSets.main.allSource
    classifier = 'sources'
@@ -31,6 +42,23 @@ artifacts {
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 60, 'seconds'
 }
+
+// Set the minimum required properties
+// configured to publish your plugin to the plugin portal
+pluginBundle {
+  website = 'http://github.com/davidecavestro/gradle-jxr-plugin'
+  vcsUrl = 'https://github.com/davidecavestro/gradle-jxr-plugin.git'
+  description = 'A Gradle plugin that uses Maven JXR to produce cross-reference for project\'s sources.'
+  tags = ['jxr', 'xref', 'cross-reference']
+
+  plugins {
+    jxrPlugin {
+      id = 'net.davidecavestro.gradle.jxr'
+      displayName = 'Gradle JXR plugin'
+    }
+  }
+}
+
 
 if(project.hasProperty("userRemoteRepo")) {
     
@@ -67,10 +95,10 @@ if(project.hasProperty("userRemoteRepo")) {
                         distribution 'repo'
                     }
                 }
-                scm { url "https://github.com/asciidoctor/asciidoctor-gradle-plugin" }
+                scm { url "https://github.com/davidecavestro/gradle-jxr-plugin.git" }
                 developers {
                     [
-                        davidecavestro: 'Davide Cavestro'
+                        davidecavestro: 'Davide Cavestro', baron1405: 'Baron Roberts'
                     ].each { devId, devName ->
                         developer {
                             id devId
