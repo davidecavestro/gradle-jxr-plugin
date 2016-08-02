@@ -5,6 +5,16 @@ image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["
 == Installation
 
 Apply the plugin in a java project
+
+
+=== Gradle 3+
+----
+plugins {
+  id "net.davidecavestro.gradle.jxr" version "0.2.1"
+}
+----
+
+=== Gradle up to 2.x
 ----
 buildscript {
     repositories {
@@ -13,13 +23,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.davidecavestro:gradle-jxr-plugin:0.1'
+        classpath 'net.davidecavestro:gradle-jxr-plugin:0.1.1'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'jxr'
 ----
+
+
 
 == Usage
 
@@ -50,6 +62,12 @@ Many thanks to:
 
 == Release Notes
 
+
+=== v0.2.1
+* Added support to Gradle 3
+
+=== v0.2.0
+* BROKEN do not use it
 
 === v0.1.1
 

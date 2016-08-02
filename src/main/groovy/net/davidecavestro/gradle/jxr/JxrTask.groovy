@@ -45,55 +45,61 @@ class JxrTask extends DefaultTask {
     boolean validProject
 
     JxrTask() {
-        def javaProject = project.plugins.findPlugin('java')
-        def groovyProject = project.plugins.findPlugin('groovy')
-        validProject = javaProject || groovyProject
+        project.afterEvaluate { project ->
 
-        if (validProject) {
-            
-            def candidates = []
-            if (javaProject) {
-                candidates.addAll project.sourceSets*.java.srcDirs
-            }
-            if (groovyProject) {
-                candidates.addAll project.sourceSets*.groovy.srcDirs
-            }
-            sourceDirs = candidates.collect {it.path}.flatten().findAll {new File (it).exists ()}
-            logger.debug ("JXR sourceDirs: $sourceDirs")
-            outputDir = new File(project.buildDir, 'jxr')
-            templatesDir = "templates"
-            windowTitle = "$project.name sources documentation"
-            docTitle = "$project.name sources documentation"
-            footer = 'Produced by Gradle JXR plugin'
-            
-            outputEncoding = 'utf-8'
-            inputEncoding = 'utf-8'
-            
-            def copyJxrResources = project.task ('copyJxrResources') {
-                def styleSheetOutput = new File (outputDir, 'stylesheet.css')
-                def cssPath = '/net/davidecavestro/gradle/jxr/stylesheet.css'
-                
-                File file
-                try {
-                    JarURLConnection connection = (JarURLConnection) getClass().getResource (cssPath).openConnection();
-                    file = new File(connection.getJarFileURL().toURI())
-                } catch (Exception e) {
-                    //at test time the css is available from resources dir, not within a jar
-                    file = new File (getClass().getResource (cssPath).toURI())
+            def javaProject = project.plugins.findPlugin('java')
+
+            def groovyProject = project.plugins.findPlugin('groovy')
+
+            validProject = javaProject || groovyProject
+
+            if (validProject) {
+
+                def candidates = []
+                if (javaProject) {
+                    candidates.addAll project.sourceSets*.java.srcDirs
                 }
-                
-                
-                inputs.file file //declare as input the jar containing the css
-                outputs.file styleSheetOutput
-                
-                doLast {
-                    outputDir.mkdirs()
-                    //copies css contents
-                    styleSheetOutput << JXR.class.getResourceAsStream(cssPath).text
+                if (groovyProject) {
+                    candidates.addAll project.sourceSets*.groovy.srcDirs
                 }
+                sourceDirs = candidates.collect {it.path}.flatten().findAll {new File (it).exists ()}
+                logger.debug ("JXR sourceDirs: $sourceDirs")
+                outputDir = new File(project.buildDir, 'jxr')
+
+                templatesDir = "templates"
+                windowTitle = "$project.name sources documentation"
+                docTitle = "$project.name sources documentation"
+                footer = 'Produced by Gradle JXR plugin'
+
+                outputEncoding = 'utf-8'
+                inputEncoding = 'utf-8'
+
+                def copyJxrResources = project.task ('copyJxrResources') {
+                    def styleSheetOutput = new File (outputDir, 'stylesheet.css')
+                    def cssPath = '/net/davidecavestro/gradle/jxr/stylesheet.css'
+                    
+                    File file
+                    try {
+                        JarURLConnection connection = (JarURLConnection) getClass().getResource (cssPath).openConnection();
+                        file = new File(connection.getJarFileURL().toURI())
+                    } catch (Exception e) {
+                        //at test time the css is available from resources dir, not within a jar
+                        file = new File (getClass().getResource (cssPath).toURI())
+                    }
+                    
+                    
+                    inputs.file file //declare as input the jar containing the css
+                    outputs.file styleSheetOutput
+                    
+                    doLast {
+                        outputDir.mkdirs()
+                        //copies css contents
+                        styleSheetOutput << JXR.class.getResourceAsStream(cssPath).text
+                    }
+                }
+
+                this.dependsOn copyJxrResources
             }
-            
-            this.dependsOn copyJxrResources
         }
     }
 
