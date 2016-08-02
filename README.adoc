@@ -53,6 +53,10 @@ Once installed the plugin provides the additional task +jxr+. It produces per-pr
 
 The gradle JXR plugin is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
 
+== Alternatives
+
+The https://github.com/mattbertolini/JXR-Ant[JXR-Ant] project provides an ANT task with some https://github.com/mattbertolini/JXR-Ant#gradle[examples] for using it within a gradle project.
+
 == Credits
 
 Many thanks to:
