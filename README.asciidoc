@@ -11,8 +11,8 @@ Moreover from version 0.2.x the published artifacts have also moved from jecente
 [width="40%",frame="topbot",options="header"]
 |==============================
 |Gradle version |Plugin version
+|>= 3.x         |0.2.x
 |<= 2.x         |0.1.x
-|3.x            |0.2.x
 |==============================
 
 
