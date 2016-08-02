@@ -1,3 +1,5 @@
+:toc:
+
 == Gradle JXR plugin
 image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["Build Status", link="https://travis-ci.org/davidecavestro/gradle-jxr-plugin"]
 
