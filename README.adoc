@@ -7,7 +7,7 @@ image:https://travis-ci.org/davidecavestro/gradle-jxr-plugin.png?branch=master["
 == Compatibility
 
 Please note the plugin has been slightly adapted to support Gradle 3.
-Moreover from version 0.2.x the published artifacts have also moved from jecenter to the new Gradle Plugin Portal.
+Moreover from version 0.2.x the published artifacts have also moved from jcenter to the new https://plugins.gradle.org/plugin/net.davidecavestro.gradle.jxr[Gradle Plugin Portal].
 
 .Gradle compatibility
 [width="40%",frame="topbot",options="header"]
